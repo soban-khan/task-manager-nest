@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { createTask } from 'src/dto/create-task.dto';
 @Controller('api/v1/tasks/')
-export class ApiController {
+export class TasksController {
   @Get()
   allTasks(): string {
     return 'all tasks';
