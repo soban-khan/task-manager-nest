@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { TaskEntity } from './task.entity';
 import { TaskInterface } from './task.interface';
 import { from, Observable } from 'rxjs';
@@ -22,5 +22,13 @@ export class TasksPostgresService {
 
   specificTask(id: string): Promise<TaskEntity> {
     return this.TaskRepository.findOne(id);
+  }
+
+  updateTask(id: string, task: TaskInterface): Promise<UpdateResult> {
+    return this.TaskRepository.update(id, task);
+  }
+
+  deleteTask(id: string): Promise<DeleteResult> {
+    return this.TaskRepository.delete(id);
   }
 }
