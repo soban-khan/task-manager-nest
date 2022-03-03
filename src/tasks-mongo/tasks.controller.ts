@@ -7,8 +7,8 @@ import {
   Delete,
   Patch,
 } from '@nestjs/common';
-import { createTask } from 'src/dto/create-task.dto';
-import { Tasks } from 'src/interfaces/tasks.interfaces';
+import { createTask } from 'src/tasks-mongo/dto/create-task.dto';
+import { Tasks } from 'src/tasks-mongo/interfaces/tasks.interfaces';
 import { TasksService } from './tasks.service';
 @Controller('api/v1/tasks/')
 export class TasksController {
