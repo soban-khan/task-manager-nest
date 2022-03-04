@@ -7,10 +7,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TasksPostgresModule } from './tasks-postgres/tasks-postgres.module';
 import { TaskEntity } from './tasks-postgres/task.entity';
 import { AppService } from './app.service';
-// import psql from './config/connection';
+// import { ServeStaticModule } from '@nestjs/serve-static';
+// import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
+import { AuthEntity } from './auth/auth.entity';
 @Module({
   imports: [
     TasksModule,
+    // ServeStaticModule.forRoot({ rootPath: join(__dirname, '..', 'public') }),
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.MONGO_LOCAL),
     TypeOrmModule.forRoot({
@@ -22,9 +26,10 @@ import { AppService } from './app.service';
       database: process.env.POSTGRES_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      entities: [TaskEntity],
+      entities: [TaskEntity, AuthEntity],
     }),
     TasksPostgresModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
