@@ -7,10 +7,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TasksPostgresModule } from './tasks-postgres/tasks-postgres.module';
 import { TaskEntity } from './tasks-postgres/task.entity';
 import { AppService } from './app.service';
-// import { ServeStaticModule } from '@nestjs/serve-static';
-// import { join } from 'path';
+import { RegisterEntity } from './register/register.entity';
 import { AuthModule } from './auth/auth.module';
-import { AuthEntity } from './auth/auth.entity';
+import { RegisterModule } from './register/register.module';
 @Module({
   imports: [
     TasksModule,
@@ -26,10 +25,11 @@ import { AuthEntity } from './auth/auth.entity';
       database: process.env.POSTGRES_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      entities: [TaskEntity, AuthEntity],
+      entities: [TaskEntity, RegisterEntity],
     }),
     TasksPostgresModule,
     AuthModule,
+    RegisterModule,
   ],
   controllers: [AppController],
   providers: [AppService],

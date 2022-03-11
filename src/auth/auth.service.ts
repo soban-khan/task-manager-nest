@@ -1,27 +1,30 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { AuthEntity } from './auth.entity';
 import { AuthInterface } from './auth.interface';
-import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { RegisterEntity } from 'src/register/register.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(AuthEntity)
-    private authRepository: Repository<AuthEntity>,
+    @InjectRepository(RegisterEntity)
+    private authRepository: Repository<RegisterEntity>,
   ) {}
 
-  async register(user: AuthInterface): Promise<AuthEntity> {
-    const saltOrRounds = 10;
-    const password = user.pass;
-    const hash = await bcrypt.hash(password, saltOrRounds);
-    user.pass = hash;
-    return this.authRepository.save(user);
-    // console.log(user);
-    // return 'register';
-  }
-
-  login(): any {
-    return 'login';
+  async verify(user: AuthInterface): Promise<AuthInterface | String> {
+    const data = await this.authRepository.find();
+    // console.log(data);
+    const temp = data.find((cur) => cur.username === user.username);
+    console.log(temp);
+    if (temp) {
+      const password = user.password;
+      const hash = temp.password;
+      const isMatch = await bcrypt.compare(password, hash);
+      if (isMatch) return 'Access granted';
+      else return 'Unauthorised Access';
+    } else {
+      return "user doesn't exist";
+    }
+    // return user;
   }
 }

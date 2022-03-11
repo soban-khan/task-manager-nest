@@ -1,5 +1,4 @@
 export interface AuthInterface {
-  id?: number;
-  name: string;
-  pass: string;
+  username: string;
+  password: string;
 }

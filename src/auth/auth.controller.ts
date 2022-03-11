@@ -1,18 +1,13 @@
-import { Body, Controller, Post, Put } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthEntity } from './auth.entity';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthInterface } from './auth.interface';
+import { AuthService } from './auth.service';
+
 @Controller('auth')
 export class AuthController {
-  constructor(private authservice: AuthService) {}
+  constructor(private authService: AuthService) {}
 
-  @Post('register')
-  registerUser(@Body() user: AuthInterface): Promise<AuthEntity> {
-    return this.authservice.register(user);
-  }
-
-  @Post('login')
-  loginUser(): any {
-    return this.authservice.login();
+  @Post()
+  verifyUser(@Body() user: AuthInterface): Promise<AuthInterface | String> {
+    return this.authService.verify(user);
   }
 }
