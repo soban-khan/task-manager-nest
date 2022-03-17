@@ -11,20 +11,21 @@ export class AuthService {
     private authRepository: Repository<RegisterEntity>,
   ) {}
 
-  async verify(user: AuthInterface): Promise<AuthInterface | String> {
+  async verify(user: AuthInterface): Promise<AuthInterface | string> {
     const data = await this.authRepository.find();
-    // console.log(data);
     const temp = data.find((cur) => cur.username === user.username);
-    console.log(temp);
+    // console.log(temp);
     if (temp) {
       const password = user.password;
       const hash = temp.password;
       const isMatch = await bcrypt.compare(password, hash);
-      if (isMatch) return 'Access granted';
-      else return 'Unauthorised Access';
+      // if (isMatch) return 'Access granted';
+      if (isMatch) return temp;
+      else return 'Wrong Password';
+      // else return null;
     } else {
       return "user doesn't exist";
+      // return null;
     }
-    // return user;
   }
 }
