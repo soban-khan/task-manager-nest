@@ -4,9 +4,12 @@ import * as bcrypt from 'bcrypt';
 import { RegisterEntity } from 'src/register/register.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { JwtService } from '@nestjs/jwt';
+import { RegisterInterface } from 'src/register/register.interface';
 @Injectable()
 export class AuthService {
   constructor(
+    private jwtService: JwtService,
     @InjectRepository(RegisterEntity)
     private authRepository: Repository<RegisterEntity>,
   ) {}
@@ -27,5 +30,14 @@ export class AuthService {
       return "user doesn't exist";
       // return null;
     }
+  }
+
+  /*
+  Here we create a new JWT
+  */
+  async login(user: RegisterInterface): Promise<string> {
+    const payload = { username: user.username, sub: user.id };
+    const accessToken = this.jwtService.sign(payload);
+    return accessToken;
   }
 }

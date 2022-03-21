@@ -11,6 +11,7 @@ import { Guard } from './auth.guard';
 import { AuthInterface } from './auth.interface';
 import { AuthService } from './auth.service';
 import { AuthenticatedGuard } from './authenticated.guard';
+import { JwtGuard } from './jwt.guard';
 
 @Controller('login')
 export class AuthController {
@@ -34,15 +35,17 @@ export class AuthController {
 
   @UseGuards(Guard)
   @Post()
-  login(@Request() req): AuthInterface {
+  login(@Request() req): Promise<string> {
     // console.log(req.user);
-    const { password, ...rest } = req.user;
-    return rest;
+    // const { password, ...rest } = req.user;
+    // return rest;
+    return this.authService.login(req.user);
   }
 
-  @UseGuards(AuthenticatedGuard)
+  // @UseGuards(AuthenticatedGuard) //this is to check if login is in session and allow access, used with session storage
+  @UseGuards(JwtGuard)
   @Get()
-  test(): string {
-    return 'logged in';
+  test(@Request() req): string {
+    return req.user;
   }
 }
