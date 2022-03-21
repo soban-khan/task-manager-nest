@@ -35,7 +35,7 @@ export class AuthController {
   @Post()
   login(@Request() req): AuthInterface {
     // console.log(req.user);
-    let { password, ...rest } = req.user;
+    const { password, ...rest } = req.user;
     return rest;
   }
 
