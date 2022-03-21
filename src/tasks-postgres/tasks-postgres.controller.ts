@@ -14,12 +14,13 @@ import { TaskEntity } from './task.entity';
 import { Observable, from } from 'rxjs';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
+import { JwtGuard } from 'src/auth/jwt.guard';
 
 @Controller('tasks-postgres')
 export class TasksPostgresController {
   constructor(private readonly tasksPostgresService: TasksPostgresService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(JwtGuard)
   @Get()
   getTasks(): Observable<TaskEntity[]> {
     return from(this.tasksPostgresService.getTasks());
