@@ -29,6 +29,7 @@ export class AuthController {
   
   when our program comes back after using use guards 
   user is attached to req object and can be accessed from there
+  after setting up session we also return a cookie from login function 
   */
 
   @UseGuards(Guard)

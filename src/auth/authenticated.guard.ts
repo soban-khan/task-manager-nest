@@ -13,6 +13,8 @@ export class AuthenticatedGuard implements CanActivate {
     /* Assuming we have set up a session
     is Authenticated comes directly from passport and returns boolean
     this will look for a session and return accordingly
+    it will check if we have cookie with that session id
+    and all other checks if we have cookie in our session etc....
     if there is a session this will return true
     */
     return request.isAuthenticated();

@@ -11,7 +11,7 @@ async function bootstrap() {
       secret: 'keyboard cat', //should be env variable
       resave: false,
       saveUninitialized: true,
-      cookie: { secure: true, maxAge: 4500000 },
+      cookie: { maxAge: 4500000 },
     }),
   );
   app.use(passport.initialize());
