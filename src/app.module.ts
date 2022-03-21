@@ -10,6 +10,7 @@ import { AppService } from './app.service';
 import { RegisterEntity } from './register/register.entity';
 import { AuthModule } from './auth/auth.module';
 import { RegisterModule } from './register/register.module';
+
 @Module({
   imports: [
     TasksModule,

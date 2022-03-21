@@ -1,8 +1,16 @@
-import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { Guard } from './auth.guard';
 // import { RegisterService } from 'src/register/register.service';
 import { AuthInterface } from './auth.interface';
 import { AuthService } from './auth.service';
+import { AuthenticatedGuard } from './authenticated.guard';
 
 @Controller('login')
 export class AuthController {
@@ -20,7 +28,8 @@ export class AuthController {
   we don't yet have anything in req.user
   
   when our program comes back after using use guards 
-  user is attached to req object and can be accessed from there*/
+  user is attached to req object and can be accessed from there
+  */
 
   @UseGuards(Guard)
   @Post()
@@ -28,5 +37,11 @@ export class AuthController {
     // console.log(req.user);
     let { password, ...rest } = req.user;
     return rest;
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Get()
+  test(): string {
+    return 'logged in';
   }
 }
