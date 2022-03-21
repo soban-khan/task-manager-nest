@@ -43,7 +43,6 @@ $ npm run start:dev
 
 ```
 
-```
 
 ## Support
 
