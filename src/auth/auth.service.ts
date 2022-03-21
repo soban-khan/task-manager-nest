@@ -34,6 +34,8 @@ export class AuthService {
 
   /*
   Here we create a new JWT
+  this login method converts the user object to payload of our requirement
+  and convert that to JWT
   */
   async login(user: RegisterInterface): Promise<string> {
     const payload = { username: user.username, sub: user.id };

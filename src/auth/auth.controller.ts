@@ -33,6 +33,12 @@ export class AuthController {
   after setting up session we also return a cookie from login function 
   */
 
+  /*
+  this will log us in using passport local strategy but when using jwt
+  i added new method which is passed the user which we get from logging in 
+  using passport local strategy
+  this method receives jwt token as return value and returns that value to client
+  */
   @UseGuards(Guard)
   @Post()
   login(@Request() req): Promise<string> {
@@ -43,6 +49,13 @@ export class AuthController {
   }
 
   // @UseGuards(AuthenticatedGuard) //this is to check if login is in session and allow access, used with session storage
+
+  /*
+  now when we call these routes it goes to use guard and hense to jwtguard
+
+  when control comes back payload is attached to req.user
+  and then we can return that or anything we want
+  */
   @UseGuards(JwtGuard)
   @Get()
   test(@Request() req): string {
